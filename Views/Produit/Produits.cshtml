@@ -1,0 +1,50 @@
+﻿@model  IEnumerable<Project_Catalogue_Produits.Service.Produit>
+
+@{
+    ViewData["Title"] = "Liste Des Produits";
+}
+
+    <h1>Liste Des Produits</h1>
+<div class="container spacer">
+    <a asp-controller="Produit" asp-action ="FormProduit"> Nouveau Produit </a>
+</div>
+
+<div>
+    <form method="post" asp-action="chercher">
+        <div class="form-group">
+            <label>Mot Clé :</label>
+            <input type="text" name="motcle" value="@ViewBag.motcle" />
+
+            <button class="btn btn-primary" type="submit">Chercher</button>
+            @Html.ValidationMessage("motcle", new { @class= "text-danger" })
+
+        </div>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(Model=>Model.ProduitID)</th>
+            <th>@Html.DisplayNameFor(Model => Model.Designation)</th>
+            <th>@Html.DisplayNameFor(Model => Model.Prix)</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            foreach(var p in Model)
+            {
+                <tr>
+                    <td> @p.ProduitID</td>
+                    <td> @p.Designation</td>
+                    <td> @p.Prix</td>
+                    <td><a asp-action="Delete" onclick="return confirm('Etes vous sures de vouloir confirmer');" asp-route-id="@p.ProduitID">Supprimer</a></td>
+                    <td><a asp-action="Edit"  asp-route-id="@p.ProduitID">Edit</a></td>
+                </tr>
+                
+            }
+        }
+    </tbody>
+</table>
+
